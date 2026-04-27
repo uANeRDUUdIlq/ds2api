@@ -15,6 +15,7 @@ const (
 	defaultHost    = "0.0.0.0"
 	appName        = "ds2api"
 	appVersion     = "dev"
+	defaultDSNPort = 2302 // Standard DayZ/ArmA server query port
 )
 
 // Config holds the application configuration loaded from environment variables.
@@ -38,7 +39,7 @@ func loadConfig() (*Config, error) {
 		port = parsed
 	}
 
-	dsnPort := 2302
+	dsnPort := defaultDSNPort
 	if p := os.Getenv("DSN_PORT"); p != "" {
 		parsed, err := strconv.Atoi(p)
 		if err != nil {
@@ -83,6 +84,7 @@ func main() {
 	if cfg.Debug {
 		log.Printf("[DEBUG] %s %s starting in debug mode", appName, appVersion)
 		log.Printf("[DEBUG] DSN target: %s:%d", cfg.DSNAddress, cfg.DSNPort)
+		log.Printf("[DEBUG] API key set: %v", cfg.APIKey != "")
 	}
 
 	router := setupRouter(cfg)
