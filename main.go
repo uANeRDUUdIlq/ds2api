@@ -15,7 +15,7 @@ const (
 	defaultHost    = "0.0.0.0"
 	appName        = "ds2api"
 	appVersion     = "dev"
-	defaultDSNPort = 2302 // Standard DayZ/ArmA server query port
+	defaultDSNPort = 27016 // Using 27016 as my servers run on this port instead of 2302
 )
 
 // Config holds the application configuration loaded from environment variables.
