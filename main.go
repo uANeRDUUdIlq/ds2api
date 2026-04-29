@@ -19,8 +19,10 @@ const (
 	defaultDSNPort = 27016 // Using 27016 as my servers run on this port instead of 2302
 
 	// defaultReadTimeout and defaultWriteTimeout prevent slow-client attacks.
-	defaultReadTimeout  = 10 * time.Second
-	defaultWriteTimeout = 15 * time.Second
+	// Bumped ReadTimeout to 15s and WriteTimeout to 30s to accommodate slower
+	// DayZ server query responses on my home lab setup.
+	defaultReadTimeout  = 15 * time.Second
+	defaultWriteTimeout = 30 * time.Second
 )
 
 // Config holds the application configuration loaded from environment variables.
