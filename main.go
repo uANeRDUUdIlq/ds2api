@@ -23,6 +23,10 @@ const (
 	// DayZ server query responses on my home lab setup.
 	defaultReadTimeout  = 15 * time.Second
 	defaultWriteTimeout = 30 * time.Second
+
+	// defaultIdleTimeout closes idle keep-alive connections after 60s.
+	// Added this after noticing lingering connections on my home lab setup.
+	defaultIdleTimeout = 60 * time.Second
 )
 
 // Config holds the application configuration loaded from environment variables.
@@ -104,6 +108,7 @@ func main() {
 		Handler:      router,
 		ReadTimeout:  defaultReadTimeout,
 		WriteTimeout: defaultWriteTimeout,
+		IdleTimeout:  defaultIdleTimeout,
 	}
 
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
