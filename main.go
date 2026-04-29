@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -16,6 +17,10 @@ const (
 	appName        = "ds2api"
 	appVersion     = "dev"
 	defaultDSNPort = 27016 // Using 27016 as my servers run on this port instead of 2302
+
+	// defaultReadTimeout and defaultWriteTimeout prevent slow-client attacks.
+	defaultReadTimeout  = 10 * time.Second
+	defaultWriteTimeout = 15 * time.Second
 )
 
 // Config holds the application configuration loaded from environment variables.
@@ -93,8 +98,10 @@ func main() {
 	log.Printf("[INFO] %s %s listening on %s", appName, appVersion, addr)
 
 	server := &http.Server{
-		Addr:    addr,
-		Handler: router,
+		Addr:         addr,
+		Handler:      router,
+		ReadTimeout:  defaultReadTimeout,
+		WriteTimeout: defaultWriteTimeout,
 	}
 
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
