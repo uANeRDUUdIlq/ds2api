@@ -28,7 +28,9 @@ const (
 	// Added this after noticing lingering connections on my home lab setup.
 	// Reduced from 60s to 45s — 60s felt too long during local testing; connections
 	// were piling up between query intervals on my Raspberry Pi setup.
-	defaultIdleTimeout = 45 * time.Second
+	// Reduced further to 30s after more testing — Pi 4 handles it fine and
+	// it keeps the connection table cleaner during overnight runs.
+	defaultIdleTimeout = 30 * time.Second
 )
 
 // Config holds the application configuration loaded from environment variables.
@@ -113,7 +115,4 @@ func main() {
 		IdleTimeout:  defaultIdleTimeout,
 	}
 
-	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("[FATAL] Server error: %v", err)
-	}
-}
+	if
