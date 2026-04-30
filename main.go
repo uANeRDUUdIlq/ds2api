@@ -26,7 +26,9 @@ const (
 
 	// defaultIdleTimeout closes idle keep-alive connections after 60s.
 	// Added this after noticing lingering connections on my home lab setup.
-	defaultIdleTimeout = 60 * time.Second
+	// Reduced from 60s to 45s — 60s felt too long during local testing; connections
+	// were piling up between query intervals on my Raspberry Pi setup.
+	defaultIdleTimeout = 45 * time.Second
 )
 
 // Config holds the application configuration loaded from environment variables.
